@@ -1,0 +1,52 @@
+spring:
+  application:
+    name: payment-service
+  # Own database per service. Values come from env vars; never commit real credentials.
+  datasource:
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/webblock_payment}
+    username: ${DB_USER}
+    password: ${DB_PASSWORD}
+  jpa:
+    open-in-view: false
+    hibernate:
+      # Schema is created only by Flyway migrations (db/migration); Hibernate just checks it
+      ddl-auto: validate
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          # Keycloak realm URL, e.g. http://localhost:8180/realms/webblock (keys are fetched on first request)
+          issuer-uri: ${KEYCLOAK_ISSUER_URI}
+  cloud:
+    openfeign:
+      client:
+        config:
+          # Applies to every @FeignClient; override per client name if needed
+          default:
+            connect-timeout: 2000
+            read-timeout: 5000
+
+server:
+  port: ${SERVER_PORT:8083}
+
+# Local / dev: find other services through discovery-service (Eureka).
+# On Kubernetes the "k8s" profile turns this off (see application-k8s.yml).
+eureka:
+  client:
+    service-url:
+      defaultZone: ${EUREKA_URL:http://localhost:8761/eureka/}
+  instance:
+    prefer-ip-address: true
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    operations-sorter: method

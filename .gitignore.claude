@@ -1,0 +1,6 @@
+# Add these lines to the repo's .gitignore
+.claude/settings.local.json
+CLAUDE.local.md
+.env
+.env.*
+!.env.example

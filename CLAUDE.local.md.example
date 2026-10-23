@@ -1,0 +1,4 @@
+# My local notes (copy to CLAUDE.local.md — it is git-ignored)
+- I work on: <your service, e.g. ai-generator-service>
+- My local ports: web 3000, project-service 8082, Keycloak 8080, Gitea 3001, Ollama 11434
+- Local model: qwen2.5-coder:7b on Ollama

@@ -1,0 +1,5 @@
+# Gradle wrapper scripts (one per service)
+**/gradlew text eol=lf
+*.bat text eol=crlf
+*.jar binary
+*.sh text eol=lf
