@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:webblock:event:envelope:v1",
+  "title": "Event envelope v1",
+  "description": "Fields every RabbitMQ event carries. Field names are snake_case. IDs and small values only: no personal data, no tokens, no big files.",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "message_id",
+    "message_type",
+    "occurred_at",
+    "correlation_id"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": 1
+    },
+    "message_id": {
+      "type": "string",
+      "format": "uuid",
+      "description": "Unique per message. Consumers use it (or the event's own stable key) to skip duplicates."
+    },
+    "message_type": {
+      "type": "string",
+      "pattern": "^[a-z_]+\\.[a-z_]+\\.v[0-9]+$",
+      "description": "<service>.<event>.v<N>"
+    },
+    "occurred_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "UTC"
+    },
+    "correlation_id": {
+      "type": "string",
+      "format": "uuid",
+      "description": "Ties together everything that belongs to one piece of work"
+    },
+    "project_id": {
+      "type": "string",
+      "format": "uuid"
+    }
+  }
+}

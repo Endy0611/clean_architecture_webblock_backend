@@ -1,0 +1,49 @@
+syntax = "proto3";
+
+// OWNER: project-service. Only the project-service team edits this file. Everyone else reads it.
+// Rules (see .claude/rules/contracts.md): add fields with NEW numbers only; never rename, renumber or remove
+// a field in v1; a breaking change means a new v2 package next to v1.
+package webblock.project.v1;
+
+option java_multiple_files = true;
+option java_package = "org.kshrd.webblock.contracts.project.v1";
+
+// What the AI service needs in order to generate a site, and who owns a chat thread.
+service CodegenInputService {
+  // The frozen input of one generation request (Puck pages + business info + contract).
+  rpc GetCodegenInput(GetCodegenInputRequest) returns (GetCodegenInputResponse);
+  // The predefined Next.js project structure, streamed in chunks (large).
+  rpc GetScaffold(GetScaffoldRequest) returns (stream ScaffoldChunk);
+  // Does this user own this design-assistant chat thread?
+  rpc CheckThreadOwner(CheckThreadOwnerRequest) returns (CheckThreadOwnerResponse);
+}
+
+message GetCodegenInputRequest {
+  string project_id = 1;
+  string generation_request_id = 2;
+}
+
+message GetCodegenInputResponse {
+  string captured_input_json = 1;  // the frozen input (business rule 13)
+  string input_sha256 = 2;         // hex SHA-256 of captured_input_json
+  int64 edit_revision = 3;         // projects.edit_revision the input was captured at
+}
+
+message GetScaffoldRequest {
+  string project_id = 1;
+}
+
+message ScaffoldChunk {
+  string path = 1;                 // file path inside the scaffold
+  bytes content = 2;               // one chunk of the file
+  bool last_chunk_of_file = 3;
+}
+
+message CheckThreadOwnerRequest {
+  string user_id = 1;
+  string thread_id = 2;
+}
+
+message CheckThreadOwnerResponse {
+  bool owned = 1;
+}

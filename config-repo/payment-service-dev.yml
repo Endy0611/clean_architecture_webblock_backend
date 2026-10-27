@@ -1,0 +1,28 @@
+# payment-service, dev (your own machine).
+# No secrets here. DB_USER, DB_PASSWORD and the WEBILL_* values come from env vars (see payment-service/.env.example).
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/webblock_payment
+  rabbitmq:
+    host: localhost
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:8180/realms/webblock
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+
+webblock:
+  webill:
+    base-url: ${WEBILL_BASE_URL}
+    polling-enabled: true
+  webill-circuit-breaker:
+    wait-duration-in-open-state: 30s
+
+logging:
+  level:
+    org.kshrd.webblock.payment: DEBUG

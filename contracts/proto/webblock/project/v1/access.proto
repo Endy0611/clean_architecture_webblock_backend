@@ -1,0 +1,28 @@
+syntax = "proto3";
+
+// OWNER: project-service. Only the project-service team edits this file. Everyone else reads it.
+// Rules (see .claude/rules/contracts.md): add fields with NEW numbers only; never rename, renumber or remove
+// a field in v1; a breaking change means a new v2 package next to v1.
+package webblock.project.v1;
+
+option java_multiple_files = true;
+option java_package = "org.kshrd.webblock.contracts.project.v1";
+
+// Who may do what to a project / website. Called by Provisioning (before deploy/promote/rollback)
+// and by the website-portal proxy (action "manage_site").
+service AccessService {
+  // May this user act on this project? An unknown project answers allowed = false, never NOT_FOUND
+  // (so nobody can learn which projects exist). Callers fail closed: no answer = no.
+  rpc CheckAccess(CheckAccessRequest) returns (CheckAccessResponse);
+}
+
+message CheckAccessRequest {
+  string user_id = 1;     // from the user's token, sent by the caller (never the token itself)
+  string project_id = 2;
+  string action = 3;      // "manage_site", "deploy_release", "promote_release", "rollback_release", "get_release"
+}
+
+message CheckAccessResponse {
+  bool allowed = 1;
+  string reason = 2;      // empty when allowed, else "NOT_MANAGER", "PROJECT_DELETED", ...
+}

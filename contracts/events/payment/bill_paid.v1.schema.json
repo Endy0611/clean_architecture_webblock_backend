@@ -1,0 +1,52 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:webblock:event:payment.bill_paid:v1",
+  "title": "payment.bill_paid.v1",
+  "description": "OWNER: Payment. A KHQR bill was paid. event_key is stable so consumers can skip a redelivery. (Exists in payment-service today.)",
+  "allOf": [
+    {
+      "$ref": "../envelope.v1.schema.json"
+    }
+  ],
+  "type": "object",
+  "required": [
+    "event_key",
+    "bill_id",
+    "subscription_id",
+    "client_user_id",
+    "amount",
+    "currency_code",
+    "paid_at"
+  ],
+  "properties": {
+    "message_type": {
+      "const": "payment.bill_paid.v1"
+    },
+    "event_key": {
+      "type": "string"
+    },
+    "bill_id": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "subscription_id": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "client_user_id": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "amount": {
+      "type": "number"
+    },
+    "currency_code": {
+      "type": "string"
+    },
+    "paid_at": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "additionalProperties": true
+}

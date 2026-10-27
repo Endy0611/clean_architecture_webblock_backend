@@ -1,0 +1,34 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:webblock:event:project.source_published:v1",
+  "title": "project.source_published.v1",
+  "description": "OWNER: Project. Tested code was committed to Gitea. Provisioning starts a deploy; Payment counts the publish; Notification tells the owner.",
+  "allOf": [
+    {
+      "$ref": "../envelope.v1.schema.json"
+    }
+  ],
+  "type": "object",
+  "required": [
+    "project_id",
+    "generation_request_id",
+    "repository_id",
+    "git_commit_sha"
+  ],
+  "properties": {
+    "message_type": {
+      "const": "project.source_published.v1"
+    },
+    "generation_request_id": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "repository_id": {
+      "type": "integer"
+    },
+    "git_commit_sha": {
+      "type": "string"
+    }
+  },
+  "additionalProperties": true
+}

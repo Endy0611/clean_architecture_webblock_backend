@@ -1,10 +1,10 @@
 ---
 paths:
-  - "ai-generator-service/**"
-  - "provisioning-service/**"
+  - "services/webblock-aicode-service/**"
+  - "services/provisioning-service/**"
 ---
 
-# Python services (ai-generator-service, provisioning-service)
+# Python services (webblock-aicode-service = ai-generator, provisioning-service)
 
 - Python 3.12+, FastAPI + Uvicorn, Pydantic v2 for request/response models.
 - Dependencies pinned in `pyproject.toml` / `requirements.txt`; local `.venv/` (git-ignored).

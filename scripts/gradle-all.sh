@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
-# Run a Gradle task in every Java service (any top-level folder with its own gradlew).
+# Run a Gradle task in every Java service (any folder under services/ with its own gradlew).
 # Usage: ./scripts/gradle-all.sh build        (default task: build)
 set -u
-root="$(cd "$(dirname "$0")/.." && pwd)"
+root="$(cd "$(dirname "$0")/../services" && pwd)"
 task="${*:-build}"
 failed=()
 

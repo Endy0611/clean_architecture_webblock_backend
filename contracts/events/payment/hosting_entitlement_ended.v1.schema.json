@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:webblock:event:payment.hosting_entitlement_ended:v1",
+  "title": "payment.hosting_entitlement_ended.v1",
+  "description": "OWNER: Payment. Hosting is no longer paid for (trial/plan ended). Provisioning takes the site offline with reason BILLING; Notification tells the owner.",
+  "allOf": [
+    {
+      "$ref": "../envelope.v1.schema.json"
+    }
+  ],
+  "type": "object",
+  "required": [
+    "user_id",
+    "event_key"
+  ],
+  "properties": {
+    "message_type": {
+      "const": "payment.hosting_entitlement_ended.v1"
+    },
+    "user_id": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "event_key": {
+      "type": "string"
+    }
+  },
+  "additionalProperties": true
+}

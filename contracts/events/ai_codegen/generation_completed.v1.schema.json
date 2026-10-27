@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:webblock:event:ai_codegen.generation_completed:v1",
+  "title": "ai_codegen.generation_completed.v1",
+  "description": "OWNER: AI Codegen. A harness run finished (success or failure). Project then reads the result with GetGenerationRun.",
+  "allOf": [
+    {
+      "$ref": "../envelope.v1.schema.json"
+    }
+  ],
+  "type": "object",
+  "required": [
+    "project_id",
+    "generation_request_id",
+    "harness_run_id",
+    "status"
+  ],
+  "properties": {
+    "message_type": {
+      "const": "ai_codegen.generation_completed.v1"
+    },
+    "generation_request_id": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "harness_run_id": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "status": {
+      "enum": [
+        "SUCCEEDED",
+        "FAILED"
+      ]
+    }
+  },
+  "additionalProperties": true
+}

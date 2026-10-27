@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:webblock:event:project.generation_requested:v1",
+  "title": "project.generation_requested.v1",
+  "description": "OWNER: Project. A publish started: AI should generate code from the frozen input.",
+  "allOf": [
+    {
+      "$ref": "../envelope.v1.schema.json"
+    }
+  ],
+  "type": "object",
+  "required": [
+    "project_id",
+    "generation_request_id",
+    "input_sha256"
+  ],
+  "properties": {
+    "message_type": {
+      "const": "project.generation_requested.v1"
+    },
+    "generation_request_id": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "input_sha256": {
+      "type": "string"
+    }
+  },
+  "additionalProperties": true
+}

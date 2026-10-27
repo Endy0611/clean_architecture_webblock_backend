@@ -1,0 +1,35 @@
+syntax = "proto3";
+
+// OWNER: user-service (Account). Only the user-service (Account) team edits this file. Everyone else reads it.
+// Rules (see .claude/rules/contracts.md): add fields with NEW numbers only; never rename, renumber or remove
+// a field in v1; a breaking change means a new v2 package next to v1.
+package webblock.account.v1;
+
+option java_multiple_files = true;
+option java_package = "org.kshrd.webblock.contracts.account.v1";
+
+import "google/protobuf/timestamp.proto";
+
+// Who a user is. Called by Notification (contact details) and Payment (trial start date).
+service UserService {
+  rpc GetUserContact(GetUserContactRequest) returns (GetUserContactResponse);
+  rpc GetSignupTime(GetSignupTimeRequest) returns (GetSignupTimeResponse);
+}
+
+message GetUserContactRequest {
+  string user_id = 1;
+}
+
+message GetUserContactResponse {
+  string email = 1;       // personal data: use it to send, never log it
+  string full_name = 2;
+  string status = 3;      // ACTIVE or SUSPENDED
+}
+
+message GetSignupTimeRequest {
+  string user_id = 1;
+}
+
+message GetSignupTimeResponse {
+  google.protobuf.Timestamp signed_up_at = 1;
+}

@@ -1,0 +1,37 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:webblock:event:project.owner_status_changed:v1",
+  "title": "project.owner_status_changed.v1",
+  "description": "OWNER: Project. The owner of a project was suspended or reactivated. Provisioning suspends or resumes hosting (offline reason USER_SUSPENDED).",
+  "allOf": [
+    {
+      "$ref": "../envelope.v1.schema.json"
+    }
+  ],
+  "type": "object",
+  "required": [
+    "project_id",
+    "owner_user_id",
+    "to_status",
+    "status_version"
+  ],
+  "properties": {
+    "message_type": {
+      "const": "project.owner_status_changed.v1"
+    },
+    "owner_user_id": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "to_status": {
+      "enum": [
+        "ACTIVE",
+        "SUSPENDED"
+      ]
+    },
+    "status_version": {
+      "type": "integer"
+    }
+  },
+  "additionalProperties": true
+}

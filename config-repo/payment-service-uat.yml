@@ -1,0 +1,25 @@
+# payment-service, uat (Kubernetes).
+# Run with SPRING_PROFILES_ACTIVE=k8s,uat. The k8s profile turns Eureka off.
+# No secrets here. DB_USER, DB_PASSWORD, WEBILL_* and KEYCLOAK_ISSUER_URI come from Kubernetes secrets.
+# TODO: confirm the DB and RabbitMQ service names with the devops team.
+spring:
+  datasource:
+    url: jdbc:postgresql://payment-db:5432/webblock_payment
+  rabbitmq:
+    host: rabbitmq
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: ${KEYCLOAK_ISSUER_URI}
+
+webblock:
+  webill:
+    base-url: ${WEBILL_BASE_URL}
+    polling-enabled: true
+  webill-circuit-breaker:
+    wait-duration-in-open-state: 30s
+
+logging:
+  level:
+    org.kshrd.webblock.payment: INFO

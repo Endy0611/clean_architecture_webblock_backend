@@ -1,0 +1,13 @@
+version: v2
+modules:
+  - path: proto
+lint:
+  use:
+    - STANDARD
+  except:
+    # Our package layout is webblock.<service>.v1 and the folder is proto/webblock/<service>/v1
+    - PACKAGE_VERSION_SUFFIX
+breaking:
+  use:
+    # Wire-compatible rules: renaming a field is caught by FILE; renumbering/removing is caught by WIRE_JSON.
+    - FILE

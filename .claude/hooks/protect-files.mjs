@@ -14,6 +14,9 @@ if (/^\.env(\..*)?$/.test(base) && !/\.example$|\.sample$/.test(base))
   block(`Blocked: ${file} holds secrets. Edit ${base}.example instead and tell the user which variable to set.`);
 if (/\.(pem|key|p12|jks|keystore)$/.test(base) || /(^|\/)secrets?\//.test(file))
   block(`Blocked: ${file} looks like a key or secret file. Ask the user to change it by hand.`);
+// Keycloak realm exports, cloud/service-account credentials, WeBill credential files
+if (/^realm-export.*\.json$/.test(base) || /credentials?.*\.(json|ya?ml)$/i.test(base) || /^service-account.*\.json$/.test(base) || base === ".netrc")
+  block(`Blocked: ${file} can hold credentials. Ask the user to change it by hand.`);
 
 // 2. Lockfiles (change them through the package manager)
 if (["package-lock.json", "pnpm-lock.yaml", "yarn.lock", "gradle.lockfile"].includes(base))

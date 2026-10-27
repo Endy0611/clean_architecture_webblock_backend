@@ -1,0 +1,49 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:webblock:event:payment.subscription_activated:v1",
+  "title": "payment.subscription_activated.v1",
+  "description": "OWNER: Payment. A subscription became ACTIVE after payment. Notification tells the admin; the invoice is emailed. (Exists in payment-service today.)",
+  "allOf": [
+    {
+      "$ref": "../envelope.v1.schema.json"
+    }
+  ],
+  "type": "object",
+  "required": [
+    "event_key",
+    "subscription_id",
+    "client_user_id",
+    "plan_id",
+    "current_period_start",
+    "current_period_end"
+  ],
+  "properties": {
+    "message_type": {
+      "const": "payment.subscription_activated.v1"
+    },
+    "event_key": {
+      "type": "string"
+    },
+    "subscription_id": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "client_user_id": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "plan_id": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "current_period_start": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "current_period_end": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "additionalProperties": true
+}

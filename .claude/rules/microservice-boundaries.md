@@ -17,7 +17,7 @@
 Rules that keep both working:
 1. **Same public paths** in both: `/api/<service>/v1/**`, where `<service>` is the folder
    name without `-service` (`/api/user/v1`, `/api/ai-generator/v1`). A route added to
-   `api-gateway/application.yml` must also be added to the Istio VirtualService, and the reverse.
+   `services/api-gateway/application.yml` must also be added to the Istio VirtualService, and the reverse.
 2. **Call other services by name only, with OpenFeign**: `@FeignClient(name = "<folder-name>")`
    (Python services: an httpx client with the base URL from config). Locally Eureka resolves it. In the `k8s` profile Eureka is off
    (`eureka.client.enabled: false`) and
@@ -31,6 +31,9 @@ Rules that keep both working:
    `spring.application.name` / app name equal to its folder name.
 
 ## Communication
+- Three channels: REST (frontend/mobile), gRPC (ask and wait), RabbitMQ events (something happened). Contracts for gRPC/events live in `contracts/`
+  (`contracts.md`). Existing calls are OpenFeign and stay until migrated one by one (`grpc.md`, `feign-to-grpc` skill).
+- Never edit another service's contract; changes others depend on follow `cross-service-change.md`.
 - Synchronous HTTP for queries; events for side effects ("send email after payment").
   Notification work must not block the request path.
 - Outbound calls: timeouts always; retries / circuit breaker (Resilience4j) where they can fail.

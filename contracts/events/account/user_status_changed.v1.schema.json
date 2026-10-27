@@ -1,0 +1,37 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:webblock:event:account.user_status_changed:v1",
+  "title": "account.user_status_changed.v1",
+  "description": "OWNER: Account. A user became ACTIVE or SUSPENDED (admin action). Project and Payment react; Project then emits owner_status_changed.",
+  "allOf": [
+    {
+      "$ref": "../envelope.v1.schema.json"
+    }
+  ],
+  "type": "object",
+  "required": [
+    "user_id",
+    "to_status",
+    "status_version"
+  ],
+  "properties": {
+    "message_type": {
+      "const": "account.user_status_changed.v1"
+    },
+    "user_id": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "to_status": {
+      "enum": [
+        "ACTIVE",
+        "SUSPENDED"
+      ]
+    },
+    "status_version": {
+      "type": "integer",
+      "description": "Only goes up. Drop events older than the stored number."
+    }
+  },
+  "additionalProperties": true
+}

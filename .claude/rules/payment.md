@@ -1,6 +1,6 @@
 ---
 paths:
-  - "payment-service/**"
+  - "services/payment-service/**"
   - "apps/web/**/billing/**"
   - "apps/web/**/plans/**"
 ---

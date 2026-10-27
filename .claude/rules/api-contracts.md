@@ -1,12 +1,15 @@
 ---
 paths:
-  - "*-service/**/api/**"
+  - "services/*-service/**/api/**"
   - "**/*Controller*.java"
   - "**/openapi*.yaml"
   - "apps/web/**/lib/api/**"
-  - "api-gateway/**"
+  - "services/api-gateway/**"
 ---
 # API contracts
+
+> The Notion page (27 Oct 2026) defines a newer response shape (envelope, cursor paging, RFC 9457). New endpoints follow
+> `rest-response-format.md`; existing ones keep the shape below until the team decides (`docs/specs/open-questions.md` #11).
 
 - Base path per service: `/api/<service>/v1/...` where `<service>` = folder name without `-service`
   (e.g. `/api/project/v1/projects/{projectId}`, `/api/user/v1/...`). Same path locally (Spring Cloud

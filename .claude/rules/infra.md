@@ -14,7 +14,7 @@ paths:
   services find each other through Service DNS. `api-gateway` and `discovery-service` are local-only:
   never deploy them to the cluster. Services run with `SPRING_PROFILES_ACTIVE=k8s`
   (Python: `EUREKA_ENABLED=false`).
-- Keep the Istio VirtualService paths identical to the routes in `api-gateway/src/main/resources/application.yml`.
+- Keep the Istio VirtualService paths identical to the routes in `services/api-gateway/src/main/resources/application.yml`.
 - GitOps with Argo CD: change manifests in Git, don't `kubectl apply` by hand in shared clusters.
 - Every service exposes `/actuator/health` and `/actuator/prometheus`; Grafana dashboards live in `infra/monitoring`.
 - Never put secrets in manifests or compose files — use `.env` (not committed) / sealed secrets.

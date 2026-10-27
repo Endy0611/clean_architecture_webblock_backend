@@ -1,0 +1,28 @@
+syntax = "proto3";
+
+// OWNER: payment-service. Only the payment-service team edits this file. Everyone else reads it.
+// Rules (see .claude/rules/contracts.md): add fields with NEW numbers only; never rename, renumber or remove
+// a field in v1; a breaking change means a new v2 package next to v1.
+package webblock.payment.v1;
+
+option java_multiple_files = true;
+option java_package = "org.kshrd.webblock.contracts.payment.v1";
+
+import "google/protobuf/timestamp.proto";
+
+// Is hosting still paid for? Called by Provisioning and Project.
+service EntitlementService {
+  rpc GetEntitlement(GetEntitlementRequest) returns (GetEntitlementResponse);
+}
+
+message GetEntitlementRequest {
+  string user_id = 1;
+  string project_id = 2;
+}
+
+message GetEntitlementResponse {
+  bool hosting_allowed = 1;
+  string source = 2;                      // "TRIAL" or "SUBSCRIPTION"
+  string subscription_status = 3;         // exact value from docs/specs/status-flows.md, empty if none
+  google.protobuf.Timestamp valid_until = 4;
+}

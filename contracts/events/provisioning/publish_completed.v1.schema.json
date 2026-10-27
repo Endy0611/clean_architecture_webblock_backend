@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:webblock:event:provisioning.publish_completed:v1",
+  "title": "provisioning.publish_completed.v1",
+  "description": "OWNER: Provisioning. A release finished: the site is live or the deploy failed. Payment records the publish; Notification tells the owner and admins.",
+  "allOf": [
+    {
+      "$ref": "../envelope.v1.schema.json"
+    }
+  ],
+  "type": "object",
+  "required": [
+    "project_id",
+    "release_id",
+    "status",
+    "event_key"
+  ],
+  "properties": {
+    "message_type": {
+      "const": "provisioning.publish_completed.v1"
+    },
+    "release_id": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "status": {
+      "enum": [
+        "LIVE",
+        "FAILED",
+        "ROLLED_BACK"
+      ]
+    },
+    "event_key": {
+      "type": "string",
+      "description": "Stable key: the same fact sent again has the same key."
+    },
+    "failure_code": {
+      "type": "string",
+      "description": "Sanitized."
+    }
+  },
+  "additionalProperties": true
+}

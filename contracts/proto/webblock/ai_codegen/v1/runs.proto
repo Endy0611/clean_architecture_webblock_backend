@@ -1,0 +1,45 @@
+syntax = "proto3";
+
+// OWNER: ai-generator-service (AI Codegen). Only the ai-generator-service (AI Codegen) team edits this file. Everyone else reads it.
+// Rules (see .claude/rules/contracts.md): add fields with NEW numbers only; never rename, renumber or remove
+// a field in v1; a breaking change means a new v2 package next to v1.
+package webblock.ai_codegen.v1;
+
+option java_multiple_files = true;
+option java_package = "org.kshrd.webblock.contracts.ai_codegen.v1";
+
+import "google/protobuf/timestamp.proto";
+
+// Read a generation result. Called by Project after a generation_completed event, or when the event is late.
+service GenerationRunService {
+  rpc GetGenerationRun(GetGenerationRunRequest) returns (GenerationRun);
+  rpc ListGenerationRuns(ListGenerationRunsRequest) returns (ListGenerationRunsResponse);
+}
+
+message GetGenerationRunRequest {
+  string generation_request_id = 1;
+}
+
+message ListGenerationRunsRequest {
+  string project_id = 1;
+  int32 limit = 2;
+  string cursor = 3;
+}
+
+message ListGenerationRunsResponse {
+  repeated GenerationRun runs = 1;
+  string next_cursor = 2;
+}
+
+message GenerationRun {
+  string harness_run_id = 1;
+  string generation_request_id = 2;
+  string project_id = 3;
+  string status = 4;            // QUEUED, RUNNING, SUCCEEDED, FAILED (status-flows.md)
+  string strategy = 5;          // PUCK_JSON, SOURCE_CODE, MIXED
+  string failure_code = 6;      // sanitized: no stack trace, path, SQL or secret
+  string failure_summary = 7;   // sanitized
+  string source_archive_url = 8;  // short-lived presigned link; check input with source_archive_sha256
+  string source_archive_sha256 = 9;
+  google.protobuf.Timestamp finished_at = 10;
+}

@@ -1,0 +1,24 @@
+syntax = "proto3";
+
+// OWNER: project-service. Only the project-service team edits this file. Everyone else reads it.
+// Rules (see .claude/rules/contracts.md): add fields with NEW numbers only; never rename, renumber or remove
+// a field in v1; a breaking change means a new v2 package next to v1.
+package webblock.project.v1;
+
+option java_multiple_files = true;
+option java_package = "org.kshrd.webblock.contracts.project.v1";
+
+// Where a site's source code lives (Gitea). Called by Provisioning/Jenkins to build the image.
+service RepositoryService {
+  rpc GetRepository(GetRepositoryRequest) returns (GetRepositoryResponse);
+}
+
+message GetRepositoryRequest {
+  string project_id = 1;
+}
+
+message GetRepositoryResponse {
+  int64 repository_id = 1;
+  string repository_full_name = 2;  // "owner/name" in Gitea. Never put a token or password here.
+  string default_branch = 3;
+}

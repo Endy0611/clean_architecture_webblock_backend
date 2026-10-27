@@ -1,0 +1,42 @@
+syntax = "proto3";
+
+// OWNER: payment-service. Only the payment-service team edits this file. Everyone else reads it.
+// Rules (see .claude/rules/contracts.md): add fields with NEW numbers only; never rename, renumber or remove
+// a field in v1; a breaking change means a new v2 package next to v1.
+package webblock.payment.v1;
+
+option java_multiple_files = true;
+option java_package = "org.kshrd.webblock.contracts.payment.v1";
+
+// "Does this user's plan allow this?" Called by Project before it creates a website or runs a generation.
+service AdmissionService {
+  rpc AdmitWebsite(AdmitWebsiteRequest) returns (AdmitResponse);
+  // Undo an admission when the website was not created after all (compensation).
+  rpc ReleaseWebsiteAdmission(ReleaseWebsiteAdmissionRequest) returns (ReleaseWebsiteAdmissionResponse);
+  rpc AdmitGenerationAttempt(AdmitGenerationAttemptRequest) returns (AdmitResponse);
+}
+
+message AdmitWebsiteRequest {
+  string user_id = 1;
+  string project_id = 2;
+  string idempotency_key = 3;   // a retry with the same key gives the same answer
+}
+
+message AdmitGenerationAttemptRequest {
+  string user_id = 1;
+  string project_id = 2;
+  string idempotency_key = 3;
+}
+
+message ReleaseWebsiteAdmissionRequest {
+  string user_id = 1;
+  string project_id = 2;
+  string idempotency_key = 3;
+}
+
+message ReleaseWebsiteAdmissionResponse {}
+
+message AdmitResponse {
+  bool admitted = 1;
+  string reason = 2;            // empty when admitted, else e.g. "PAGE_LIMIT_REACHED", "TRIAL_GENERATIONS_USED"
+}

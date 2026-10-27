@@ -7,7 +7,7 @@ import { projectDir } from "./lib.mjs";
 const git = (...a) => { try { return execFileSync("git", a, { cwd: projectDir, encoding: "utf8", stdio: ["ignore", "pipe", "ignore"] }).trim(); } catch { return ""; } };
 const branch = git("rev-parse", "--abbrev-ref", "HEAD") || "(no git)";
 const changed = git("status", "--porcelain", "-uall").split("\n").filter(Boolean).map(l => l.slice(3));
-const areas = [...new Set(changed.map(f => f.match(/^([a-z-]+-service|api-gateway|config-repo|apps\/[^/]+|packages\/[^/]+|templates\/[^/]+|infra|docs)/)?.[1]).filter(Boolean))];
+const areas = [...new Set(changed.map(f => f.match(/^(services\/[^\/]+|contracts|commons|config-repo|apps\/[^/]+|packages\/[^/]+|templates\/[^/]+|infra|docs)/)?.[1]).filter(Boolean))];
 
 let openQ = 0;
 const oq = path.join(projectDir, "docs/specs/open-questions.md");

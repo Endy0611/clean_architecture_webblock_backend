@@ -1,0 +1,16 @@
+{
+  "name": "webblock",
+  "version": "0.1.0",
+  "description": "WebBlock backend toolkit: service-to-service contracts (gRPC + RabbitMQ), layered Java/Python layout checks, secret and boundary guards, and skills/agents/commands for the microservices.",
+  "author": {
+    "name": "WebBlock backend team"
+  },
+  "keywords": [
+    "microservices",
+    "spring-boot",
+    "grpc",
+    "rabbitmq",
+    "contracts",
+    "security"
+  ]
+}

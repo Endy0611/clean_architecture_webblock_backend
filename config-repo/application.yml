@@ -1,0 +1,10 @@
+# Shared by every service. A service file (<service>-<profile>.yml) overrides these values.
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+
+logging:
+  level:
+    root: INFO

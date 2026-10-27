@@ -55,3 +55,5 @@ CLAUDE.local.md
 ### OS ###
 .DS_Store
 Thumbs.db
+# Windows device name; a native protoc writes a real file called "nul" when given /dev/null
+nul

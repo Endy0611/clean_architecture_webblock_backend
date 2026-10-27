@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:webblock:event:project.generation_cancelled:v1",
+  "title": "project.generation_cancelled.v1",
+  "description": "OWNER: Project. The owner or system cancelled a generation request.",
+  "allOf": [
+    {
+      "$ref": "../envelope.v1.schema.json"
+    }
+  ],
+  "type": "object",
+  "required": [
+    "project_id",
+    "generation_request_id"
+  ],
+  "properties": {
+    "message_type": {
+      "const": "project.generation_cancelled.v1"
+    },
+    "generation_request_id": {
+      "type": "string",
+      "format": "uuid"
+    }
+  },
+  "additionalProperties": true
+}

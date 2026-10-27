@@ -1,6 +1,6 @@
 ---
 paths:
-  - "provisioning-service/**"
+  - "services/provisioning-service/**"
 ---
 # Provisioning / deployment service
 
